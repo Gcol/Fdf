@@ -56,7 +56,7 @@ char			**ft_strsplit(char const *s, char c)
 	if (!s)
 		return (NULL);
 	nb_word = ft_cnt_parts((const char *)s, c);
-	t = (char **)malloc(sizeof(*t) * (ft_cnt_parts((const char *)s, c) + 1));
+	t = malloc(sizeof(*t) * (ft_cnt_parts((const char *)s, c) + 1));
 	if (t == NULL)
 		return (NULL);
 	while (nb_word--)

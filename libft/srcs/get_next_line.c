@@ -51,7 +51,7 @@ t_memory		*init_struct(t_memory *save, int fd)
 			recup->next = save;
 		save->next = NULL;
 		save->pm = 1;
-		save->buf = ft_memalloc(BUFF_SIZE + 1);
+		save->buf = ft_memalloc_exit(BUFF_SIZE + 1);
 	}
 	return (save);
 }
@@ -103,7 +103,7 @@ int				get_next_line(const int fd, char **line)
 			save = free_factory(save);
 			return (read(fd, "", BUFF_SIZE));
 		}
-	if (!(*line = ft_memalloc(BUFF_SIZE + 1)))
+	if (!(*line = ft_memalloc_exit(BUFF_SIZE + 1)))
 		return (0);
 	save->pm = (ft_strlen(save->buf) > 0) ? ft_strlen(save->buf) : 1;
 	return (ft_attrib(line, save, 0, 0));

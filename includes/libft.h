@@ -6,7 +6,7 @@
 /*   By: gcollett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 11:21:42 by gcollett          #+#    #+#             */
-/*   Updated: 2017/03/31 17:43:04 by gcollett         ###   ########.fr       */
+/*   Updated: 2017/04/04 03:58:16 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ void			ft_lst_push_front(t_list **begin_list, void *content, \
 char			*ft_strndup(const char *s1, size_t len);
 int				get_next_line(const int fd, char**line);
 char			*ft_strjoin_free(char *s1, char *s2);
-int				ft_intlen(int a);
+void			*ft_memalloc_exit(size_t size);
 
 #endif

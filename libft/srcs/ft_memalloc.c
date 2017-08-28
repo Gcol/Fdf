@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_memalloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcollett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/06 17:47:11 by gcollett          #+#    #+#             */
-/*   Updated: 2017/03/31 17:39:57 by gcollett         ###   ########.fr       */
+/*   Created: 2016/11/06 16:32:18 by gcollett          #+#    #+#             */
+/*   Updated: 2016/12/06 23:36:31 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin_free(char *s1, char *s2)
+void	*ft_memalloc(size_t size)
 {
-	char	*new_str;
-	size_t	i;
-	size_t	j;
-	size_t	s1_len;
-	size_t	s2_len;
+	size_t	t;
+	char	*str;
 
-	s1_len = 0;
-	s2_len = 0;
-	if (s1)
-		s1_len = ft_strlen(s1);
-	if (s2)
-		s2_len = ft_strlen(s2);
-	new_str = ft_strnew(s1_len + s2_len);
-	if (!new_str)
+	t = -1;
+	str = (char *)malloc(sizeof(char) * size);
+	if (!str)
 		return (NULL);
-	i = -1;
-	j = -1;
-	while (++i < s1_len)
-		*(new_str + i) = *(s1 + i);
-	while (++j < s2_len && *(s2 + j) != '\0')
-		*(new_str + i++) = *(s2 + j);
+	while (++t < size)
+		str[t] = '\0';
+	return (str);
+}
 
-	free(s1);
-	free(s2);
-	return (new_str);
+void	*ft_memalloc_exit(size_t size)
+{
+	size_t	t;
+	char	*str;
+
+	t = -1;
+	str = (char *)malloc(sizeof(char) * size);
+	if (!str)
+	{
+		write(1, "ft_memalloc_exit : No such memory\n", 35);
+		exit(1);
+	}
+	while (++t < size)
+		str[t] = '\0';
+	return (str);
 }

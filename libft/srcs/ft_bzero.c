@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcollett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/06 16:32:18 by gcollett          #+#    #+#             */
-/*   Updated: 2016/12/06 23:36:31 by gcollett         ###   ########.fr       */
+/*   Created: 2016/11/05 12:07:19 by gcollett          #+#    #+#             */
+/*   Updated: 2016/11/08 09:48:52 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
 
-void	*ft_memalloc(size_t size)
+void	*ft_bzero(void *s, size_t n)
 {
-	size_t	t;
-	char	*str;
+	unsigned char	*a;
+	unsigned long	*lp;
 
-	t = -1;
-	str = (char *)malloc(sizeof(char) * size);
-	if (!str)
-		return (NULL);
-	while (++t < size)
-		str[t] = '\0';
-	return (str);
+	if (n == 0)
+		return (s);
+	lp = (unsigned long *)s;
+	while (n >= sizeof(long int))
+	{
+		*lp++ = 0;
+		n -= sizeof(long int);
+	}
+	a = (unsigned char *)lp;
+	while (n--)
+		*a++ = 0;
+	return (s);
 }
