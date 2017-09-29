@@ -21,8 +21,6 @@ void	line_init(t_line *pt, t_modif *md, t_map *map, int state)
 			map->matrice[pt->i][pt->j]) ? 0x00FF00 : 0xFF0000;
 		pt->x1 = pt->x0 + md->distance - map->matrice[pt->i][pt->j + 1] * state;
 		pt->y1 = pt->y0 - map->matrice[pt->i][pt->j + 1] * state;
-		pt->x0 = pt->x0 - ((map->matrice[pt->i][pt->j]) * state);
-		pt->y0 = pt->y0 - ((map->matrice[pt->i][pt->j]) * state);
 	}
 	else if (state == 2)
 	{
@@ -31,9 +29,9 @@ void	line_init(t_line *pt, t_modif *md, t_map *map, int state)
 			map->matrice[pt->i + 1][pt->j]) ? 0x00FF00 : 0xFF0000;
 		pt->x1 = pt->x0 - map->matrice[pt->i + 1][pt->j] * state;
 		pt->y1 = pt->y0 + md->distance - map->matrice[pt->i + 1][pt->j] * state;
-		pt->x0 = pt->x0 - ((map->matrice[pt->i][pt->j]) * state);
-		pt->y0 = pt->y0 - ((map->matrice[pt->i][pt->j]) * state);
 	}
+	pt->x0 = pt->x0 - ((map->matrice[pt->i][pt->j]) * state);
+	pt->y0 = pt->y0 - ((map->matrice[pt->i][pt->j]) * state);
 	pt->dx = labs(pt->x1 - pt->x0);
 	pt->sx = pt->x0 < pt->x1 ? 1 : -1;
 	pt->dy = labs(pt->y1 - pt->y0);
@@ -46,10 +44,10 @@ void	ft_line(t_map *map, t_modif *modif, t_line line, int state)
 	line_init(&line, modif, map, state);
 	while (1)
 	{
-		if ((((line.x0 - line.y0) > 0 && (line.x0 - line.y0) < modif->width) &&
-		(line.y0 + line.x0) > 0 && (line.y0 + line.x0) / 2 < modif->height))
+		if ((((line.x0 - line.y0) > 0 && (line.x0 - line.y0) < WIDTH) &&
+		(line.y0 + line.x0) > 0 && (line.y0 + line.x0) / 2 < HEIGHT))
 			map->img.dta[(line.x0 - line.y0) +
-				(line.y0 + line.x0) / 2 * modif->width] = line.color;
+				(line.y0 + line.x0) / 2 * WIDTH] = line.color;
 		if (line.x0 == line.x1 && line.y0 == line.y1)
 			break ;
 		line.e2 = line.err;

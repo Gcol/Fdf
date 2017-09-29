@@ -6,15 +6,21 @@
 /*   By: gcollett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/12 12:10:27 by gcollett          #+#    #+#             */
-/*   Updated: 2017/08/05 02:36:42 by gcollett         ###   ########.fr       */
+/*   Updated: 2017/09/29 19:24:37 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include <mlx.h>
-# include "libft.h"
+# include "../minilibx/mlx.h"
+# include "../libft/includes/libft.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+
+# define HEIGHT 1440
+# define WIDTH 2600
 
 typedef struct	s_img
 {
@@ -32,8 +38,6 @@ typedef struct	s_modif
 	int			z_base;
 	double		zoom;
 	int			distance;
-	int			width;
-	int			height;
 }				t_modif;
 
 typedef struct	s_map
@@ -44,7 +48,7 @@ typedef struct	s_map
 	int			*len_line;
 	int			len;
 	char		*path;
-	char		clr;
+	int			clr[2];
 	t_img		img;
 	t_modif		*modif;
 }				t_map;

@@ -6,17 +6,11 @@
 /*   By: gcollett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/31 13:20:10 by gcollett          #+#    #+#             */
-/*   Updated: 2017/08/04 04:18:48 by gcollett         ###   ########.fr       */
+/*   Updated: 2017/09/29 19:25:12 by gcollett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <libft.h>
 #include <fdf.h>
-#include <stdio.h>
 
 void	parsing_fdf(char *ligne, char *argv, t_map *map, int len)
 {
@@ -47,9 +41,16 @@ void	parsing_fdf(char *ligne, char *argv, t_map *map, int len)
 	close(fd);
 }
 
-void	re_trace(t_map *map)
+void	re_trace(t_map *map, int reset)
 {
-	ft_bzero(map->img.dta, map->modif->width * map->modif->height * 4);
+	if (reset)
+	{
+		map->modif->x_base = 400;
+		map->modif->y_base = 0;
+		map->modif->distance = 10;
+		map->modif->zoom = 0.1;
+	}
+	ft_bzero(map->img.dta, WIDTH * HEIGHT * 4);
 	calcul_matrice(map, map->modif);
 	mlx_put_image_to_window(map->mlx, map->win, map->img.img_addr, 0, 0);
 	mlx_string_put(map->mlx, map->win, 15, 15, 0xffffff, map->path);
@@ -60,25 +61,20 @@ int		pressed_key(int keycode, t_map *map)
 	if (keycode == 53)
 		exit(0);
 	if ((keycode >= 123 && keycode <= 126) || keycode == 69 ||
-	keycode == 78 || keycode == 13 || keycode == 1)
+	keycode == 78 || keycode == 13 || keycode == 1 || keycode == 15)
 	{
-		if (keycode == 1)
-			map->modif->zoom -= 1;
-		else if (keycode == 13)
-			map->modif->zoom += 1;
-		else if (keycode == 69)
-			map->modif->distance += 1;
-		else if (keycode == 78)
-			map->modif->distance -= 1;
-		else if (keycode == 126)
-			map->modif->y_base -= 20;
-		else if (keycode == 125)
-			map->modif->y_base += 20;
-		else if (keycode == 124)
-			map->modif->x_base += 20;
-		else if (keycode == 123)
-			map->modif->x_base -= 20;
-		re_trace(map);
+		if (keycode == 1 || keycode == 13)
+			map->modif->zoom += (0.1 * ((keycode == 1) ? -1 : 1 ));
+		else if (keycode == 69 || keycode == 78)
+			map->modif->distance += (1 * ((keycode == 78) ? -1 : 1 ));
+		else if (keycode == 126 || keycode == 125)
+			map->modif->y_base += (20 * ((keycode == 125) ? -1 : 1 ));
+		else if (keycode == 124 || keycode == 123)
+			map->modif->x_base += (20 * ((keycode == 123) ? -1 : 1 ));
+		if (keycode != 15)
+			re_trace(map, 0);
+		else
+			re_trace(map, 1);
 	}
 	return (0);
 }
@@ -90,20 +86,17 @@ void	create_win(char *argv, int cnt)
 	map = ft_memalloc_exit(sizeof(t_map));
 	map->modif = ft_memalloc_exit(sizeof(t_modif));
 	map->path = argv;
-	map->modif->height = 1440;
-	map->modif->width = 2600;
 	map->modif->distance = 10;
 	map->modif->x_base = 400;
+	map->modif->zoom = 0.1;
 	map->mlx = mlx_init();
-	map->win = mlx_new_window(map->mlx, map->modif->width,
-		map->modif->height, argv);
-	map->img.img_addr = mlx_new_image(map->mlx, map->modif->width,
-		map->modif->height);
+	map->win = mlx_new_window(map->mlx, WIDTH, HEIGHT, argv);
+	map->img.img_addr = mlx_new_image(map->mlx, WIDTH, HEIGHT);
 	map->img.dta = (int *)mlx_get_data_addr(map->img.img_addr,
 			&map->img.bpp, &map->img.sl, &map->img.end);
 	parsing_fdf("", argv, map, cnt);
 	calcul_matrice(map, map->modif);
-	if (map->modif->height > 0 && map->modif->width > 0)
+	if (HEIGHT > 0 && WIDTH > 0)
 	{
 		mlx_put_image_to_window(map->mlx, map->win, map->img.img_addr, 0, 0);
 		mlx_string_put(map->mlx, map->win, 15, 15, 0xffffff, argv);
