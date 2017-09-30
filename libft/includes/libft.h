@@ -105,5 +105,6 @@ char			*ft_strndup(const char *s1, size_t len);
 int				get_next_line(const int fd, char**line);
 char			*ft_strjoin_free(char *s1, char *s2);
 void			*ft_memalloc_exit(size_t size);
+int				ft_atoi_base(char *str, int base);
 
 #endif

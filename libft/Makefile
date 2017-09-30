@@ -89,6 +89,7 @@ SRC_FT =	ft_memset					\
 					ft_strndup				\
 					get_next_line			\
 					ft_strjoin_free		\
+					ft_atoi_base			\
 
 
 ## List of Utilities

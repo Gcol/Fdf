@@ -19,8 +19,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-# define HEIGHT 1440
-# define WIDTH 2600
+# define HEIGHT 720
+# define WIDTH 1080
 
 typedef struct	s_img
 {
@@ -37,6 +37,7 @@ typedef struct	s_modif
 	int			y_base;
 	int			z_base;
 	double		zoom;
+	long		clr;
 	int			distance;
 }				t_modif;
 
@@ -48,7 +49,6 @@ typedef struct	s_map
 	int			*len_line;
 	int			len;
 	char		*path;
-	int			clr[2];
 	t_img		img;
 	t_modif		*modif;
 }				t_map;
